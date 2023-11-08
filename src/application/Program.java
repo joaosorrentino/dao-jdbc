@@ -14,8 +14,18 @@ public class Program {
 		System.out.println(seller);
 		
 		Department department = new Department(2,null);
+		System.out.println("");
+		System.out.println("------------------------------");
+		System.out.println("");
 		
 		List<Seller> list = sellerDao.finByDepartment(department);
+		for(Seller obj : list) {
+			System.out.println(obj);
+		}
+		System.out.println("");
+		System.out.println("------------------------------");
+		System.out.println("");
+		list = sellerDao.findAll();
 		for(Seller obj : list) {
 			System.out.println(obj);
 		}
