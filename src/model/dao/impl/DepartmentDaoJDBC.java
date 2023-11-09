@@ -31,7 +31,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 					+ "(?) ",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			st.setString(2, obj.getName());
+			st.setString(1, obj.getName());
 			
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected > 0) {
@@ -58,13 +58,12 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"UPDATE seller "
-					+ "SET Id = ?, Name = ? "
+					"UPDATE department "
+					+ "SET Name = ? "
 					+ "WHERE Id = ?");
 			
-			st.setInt(1, obj.getId());
-			st.setString(2, obj.getName());
-			
+			st.setString(1, obj.getName());
+			st.setInt(2, obj.getId());
 			
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -90,13 +89,6 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		}
 		
 	}
-	
-	private Department instantiateDepartment(ResultSet rs) throws SQLException {
-		 Department dep = new Department();
-		 dep.setId(rs.getInt("DepartmentId"));
-		 dep.setName(rs.getString("DepName"));
-		 return dep;
-	}
 
 	@Override
 	public Department findById(Integer id) {
@@ -104,7 +96,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT department.* "
+					"SELECT * "
 					+ "FROM department "
 					+ "WHERE Id = ?");
 			
@@ -112,7 +104,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 			rs = st.executeQuery();
 			
 			if (rs.next()) {
-				Department dep = instantiateDepartment(rs);
+				Department dep = new Department();
 				dep.setId(rs.getInt("Id"));
 				dep.setName(rs.getString("Name"));
 				return dep;
