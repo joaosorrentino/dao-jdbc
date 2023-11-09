@@ -6,15 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import db.DB;
 import db.DbException;
 import model.dao.DepartmentDao;
 import model.entities.Department;
-import model.entities.Seller;
 
 public class DepartmentDaoJDBC implements DepartmentDao{
 	
@@ -30,12 +26,11 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO department "
-					+ "(Id, Name) "
+					+ "(Name) "
 					+ "VALUES "
-					+ "(?, ?) ",
+					+ "(?) ",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			st.setInt(1, obj.getId());
 			st.setString(2, obj.getName());
 			
 			int rowsAffected = st.executeUpdate();
